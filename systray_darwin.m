@@ -242,6 +242,8 @@ void setIcon(const char* iconBytes, int length, bool template) {
     [image setSize:NSMakeSize(16, 16)];
     image.template = template;
     runInMainThread(@selector(setIcon:), (id)image);
+    image = nil;
+    buffer = nil;
   }
 }
 
@@ -253,6 +255,8 @@ void setMenuItemIcon(const char* iconBytes, int length, int menuId, bool templat
     image.template = template;
     NSNumber *mId = [NSNumber numberWithInt:menuId];
     runInMainThread(@selector(setMenuItemIcon:), @[image, (id)mId]);
+    image = nil;
+    buffer = nil;
   }
 }
 
