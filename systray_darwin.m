@@ -239,11 +239,10 @@ void setIcon(const char* iconBytes, int length, bool template) {
   @autoreleasepool {
     NSData* buffer = [NSData dataWithBytes: iconBytes length:length];
     NSImage *image = [[NSImage alloc] initWithData:buffer];
+    [image setCacheMode:NSImageCacheNever]
     [image setSize:NSMakeSize(16, 16)];
     image.template = template;
     runInMainThread(@selector(setIcon:), (id)image);
-    image = nil;
-    buffer = nil;
   }
 }
 
@@ -251,12 +250,11 @@ void setMenuItemIcon(const char* iconBytes, int length, int menuId, bool templat
   @autoreleasepool {
     NSData* buffer = [NSData dataWithBytes: iconBytes length:length];
     NSImage *image = [[NSImage alloc] initWithData:buffer];
+    [image setCacheMode:NSImageCacheNever]
     [image setSize:NSMakeSize(16, 16)];
     image.template = template;
     NSNumber *mId = [NSNumber numberWithInt:menuId];
     runInMainThread(@selector(setMenuItemIcon:), @[image, (id)mId]);
-    image = nil;
-    buffer = nil;
   }
 }
 
