@@ -236,28 +236,24 @@ void runInMainThread(SEL method, id object) {
 }
 
 void setIcon(const char* iconBytes, int length, bool template) {
-  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  NSData* buffer = [NSData dataWithBytes: iconBytes length:length];
-  NSImage *image = [[NSImage alloc] initWithData:buffer];
-  [image setSize:NSMakeSize(16, 16)];
-  image.template = template;
-  runInMainThread(@selector(setIcon:), (id)image);
-  [buffer release];
-  [image release];
-  [pool release];
+  @autoreleasepool {
+    NSData* buffer = [NSData dataWithBytes: iconBytes length:length];
+    NSImage *image = [[NSImage alloc] initWithData:buffer];
+    [image setSize:NSMakeSize(16, 16)];
+    image.template = template;
+    runInMainThread(@selector(setIcon:), (id)image);
+  }
 }
 
 void setMenuItemIcon(const char* iconBytes, int length, int menuId, bool template) {
-  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  NSData* buffer = [NSData dataWithBytes: iconBytes length:length];
-  NSImage *image = [[NSImage alloc] initWithData:buffer];
-  [image setSize:NSMakeSize(16, 16)];
-  image.template = template;
-  NSNumber *mId = [NSNumber numberWithInt:menuId];
-  runInMainThread(@selector(setMenuItemIcon:), @[image, (id)mId]);
-  [buffer release];
-  [image release];
-  [pool release];
+  @autoreleasepool {
+    NSData* buffer = [NSData dataWithBytes: iconBytes length:length];
+    NSImage *image = [[NSImage alloc] initWithData:buffer];
+    [image setSize:NSMakeSize(16, 16)];
+    image.template = template;
+    NSNumber *mId = [NSNumber numberWithInt:menuId];
+    runInMainThread(@selector(setMenuItemIcon:), @[image, (id)mId]);
+  }
 }
 
 void setTitle(char* ctitle) {
